@@ -31,7 +31,7 @@
         ?>
     </table>
     <?php
-        include 'employee.php';
+        include 'employees_per_dept.php';
     ?>
 </body>
 </html>
