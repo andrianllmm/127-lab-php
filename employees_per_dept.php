@@ -17,7 +17,7 @@ $result = $conn->query($sql);
 $currentDept = null;
 
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         if ($currentDept !== $row["DeptID"]) {
             if ($currentDept !== null) {
                 echo "</table>";
@@ -33,6 +33,7 @@ if ($result->num_rows > 0) {
                     <th>Age</th>
                     <th>Salary</th>
                     <th>HireDate</th>
+                    <th>Designation</th>
                 </tr>";
         }
 
@@ -41,10 +42,35 @@ if ($result->num_rows > 0) {
             <td align='center'>" . $row["EmpName"] . "</td>
             <td align='center'>" . $row["Age"] . "</td>
             <td align='center'>" . $row["Salary"] . "</td>
-            <td align='center'>" . $row["HireDate"] . "</td>
-        </tr>";
+            <td align='center'>" . $row["HireDate"] . "</td>";
+
+        if ($row["MgrEmpID"] == $row["EmpID"]) {
+            echo "<td align='center'>Manager</td>";
+        } else {
+            echo "<td align='center'>Employee</td>";
+        }
+
+        echo "<td align='center'>
+            <form action='deleteEmployee.php' method='post'>
+                <input type='hidden' name='EmpID' value='" . $row["EmpID"] . "'>
+                <button type='submit'>Delete</button>
+            </form>
+
+            <form action='editEmployee.php' method='post'>
+                <input type='hidden' name='EmpID' value='" . $row["EmpID"] . "'>
+                <button type='submit'>Edit</button>
+            </form>
+        </td>";
+
+        echo "</tr>";
     }
+
+    echo "</table>";
+
 } else {
     echo "0 results";
 }
+
+$conn->close();
+
 ?>
