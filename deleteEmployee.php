@@ -1,4 +1,5 @@
 <?php
+
 include 'DBConnector.php';
 
 if (isset($_POST['EmpID'])) {
@@ -18,5 +19,7 @@ $conn->close();
 
 // redirect back
 header("Location: index.php");
+
 exit();
+
 ?>

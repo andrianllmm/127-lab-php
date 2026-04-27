@@ -1,4 +1,5 @@
 <?php
+
 include 'DBConnector.php';
 
 if (!isset($_POST['EmpID'])) {
@@ -108,5 +109,7 @@ $designation = ($row['MgrEmpID'] == $row['EmpID']) ? 1 : 2;
 </html>
 
 <?php
+
 $conn->close();
+
 ?>

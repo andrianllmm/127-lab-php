@@ -1,4 +1,5 @@
 <?php
+
 include 'DBConnector.php';
 
 if (!isset($_POST['EmpID'])) {
@@ -6,7 +7,7 @@ if (!isset($_POST['EmpID'])) {
     exit();
 }
 
-// Collect inputs
+// collect inputs
 $empID = intval($_POST['EmpID']);
 $name = $conn->real_escape_string($_POST['name']);
 $age = intval($_POST['age']);
@@ -67,5 +68,7 @@ $conn->close();
 
 // redirect
 header("Location: index.php");
+
 exit();
+
 ?>
