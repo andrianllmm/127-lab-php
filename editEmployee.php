@@ -25,88 +25,73 @@ $row = $result->fetch_assoc();
 $designation = ($row['MgrEmpID'] == $row['EmpID']) ? 1 : 2;
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: Calibri; }
-        td.tlabel {
-            width: 120px;
-            text-align: right;
-            padding-right: 10px;
-        }
-    </style>
-</head>
-<body>
+<?php include 'header.php'; ?>
 
 <h1>Edit Employee</h1>
 
 <form action="updateEmployee.php" method="post">
     <input type="hidden" name="EmpID" value="<?php echo $row['EmpID']; ?>">
 
-    <table>
+    <div class="form-grid">
 
-        <tr>
-            <td class="tlabel">Name</td>
-            <td><input type="text" name="name" value="<?php echo $row['EmpName']; ?>"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Name</label>
+            <input type="text" name="name" value="<?php echo $row['EmpName']; ?>">
+        </div>
 
-        <tr>
-            <td class="tlabel">Age</td>
-            <td><input type="number" name="age" value="<?php echo $row['Age']; ?>"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Age</label>
+            <input type="number" name="age" value="<?php echo $row['Age']; ?>">
+        </div>
 
-        <tr>
-            <td class="tlabel">Salary</td>
-            <td><input type="number" step="0.01" name="salary" value="<?php echo $row['Salary']; ?>"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Salary</label>
+            <input type="number" step="0.01" name="salary" value="<?php echo $row['Salary']; ?>">
+        </div>
 
-        <tr>
-            <td class="tlabel">Percent Time</td>
-            <td><input type="text" name="percent_time" value="<?php echo $row['Percent_Time']; ?>"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Percent Time</label>
+            <input type="text" name="percent_time" value="<?php echo $row['Percent_Time']; ?>">
+        </div>
 
-        <tr>
-            <td class="tlabel">Date Hired</td>
-            <td><input type="date" name="date_hired" value="<?php echo $row['HireDate']; ?>"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Date Hired</label>
+            <input type="date" name="date_hired" value="<?php echo $row['HireDate']; ?>">
+        </div>
 
-        <tr>
-            <td class="tlabel">Department</td>
-            <td>
-                <select name="department">
-                    <?php
-                    $deptResult = $conn->query("SELECT * FROM department");
-                    while ($dept = $deptResult->fetch_assoc()) {
-                        $selected = ($dept['DeptID'] == $row['DeptID']) ? "selected" : "";
-                        echo "<option value='{$dept['DeptID']}' $selected>{$dept['DeptName']}</option>";
-                    }
-                    ?>
-                </select>
-            </td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Department</label>
+            <select name="department">
+                <?php
+                $deptResult = $conn->query("SELECT * FROM department");
+                while ($dept = $deptResult->fetch_assoc()) {
+                    $selected = ($dept['DeptID'] == $row['DeptID']) ? "selected" : "";
+                    echo "<option value='{$dept['DeptID']}' $selected>{$dept['DeptName']}</option>";
+                }
+                ?>
+            </select>
+        </div>
 
-        <tr>
-            <td class="tlabel">Designation</td>
-            <td>
+        <div class="form-row">
+            <label class="tlabel">Designation</label>
+            <div>
                 <input type="radio" name="designation" value="1" <?php if ($designation == 1) echo "checked"; ?>> Manager<br>
                 <input type="radio" name="designation" value="2" <?php if ($designation == 2) echo "checked"; ?>> Employee<br>
-            </td>
-        </tr>
+            </div>
+        </div>
 
-        <tr>
-            <td></td>
-            <td>
+        <div class="form-row">
+            <label></label>
+            <div>
                 <button type="submit">Submit</button>
                 <a href="index.php"><button type="button">Cancel</button></a>
-            </td>
-        </tr>
+            </div>
+        </div>
 
-    </table>
+    </div>
 </form>
 
-</body>
-</html>
+<?php include 'footer.php'; ?>
 
 <?php
 

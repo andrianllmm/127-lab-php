@@ -1,88 +1,66 @@
-<!DOCTYPE html>
-<html?>
-<head>
-<style>
-    body {
-        font-family: Calibri
-    }
+<?php include 'header.php'; ?>
 
-    td.tlabel {
-        width: 90px;
-        text-align: right;
-        padding-right: 10px;
-    }
+<h1>Employee Management</h1>
+<br>
 
-    .expand {
-        width: 170px;
-    }
-</style>
-</head>
+<h3>New Employee</h3>
 
-<body>
-    <h1>Employee Management</h1>
-    <br>
+<form action="addEmployee.php" method="get">
+    <div class="form-grid">
 
-    <h3>New Employee :</h3>
+        <div class="form-row">
+            <label class="tlabel">Name</label>
+            <input type="text" name="name">
+        </div>
 
-    <form action="addEmployee.php" method="get">
-        <table style="width: 100%">
+        <div class="form-row">
+            <label class="tlabel">Age</label>
+            <input type="number" name="age">
+        </div>
 
-        <tr>
-            <td class="tlabel">Name</td>
-            <td><input type="text" name="name"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Salary</label>
+            <input type="number" step="0.01" name="salary">
+        </div>
 
-        <tr>
-            <td class="tlabel">Age</td>
-            <td><input type="number" name="age"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Percent Time</label>
+            <input type="text" name="percent_time">
+        </div>
 
-        <tr>
-            <td class="tlabel">Salary</td>
-            <td><input type="number" step="0.01" name="salary"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Date Hired</label>
+            <input class="expand" type="date" name="date_hired">
+        </div>
 
-        <tr>
-            <td class="tlabel">Percent Time</td>
-            <td><input type="text" name="percent_time"></td>
-        </tr>
+        <div class="form-row">
+            <label class="tlabel">Department</label>
+            <select class="expand" name="department">
+                <option value="" disabled selected>Select Department</option>
+                <?php include 'allDepartment.php'; ?>
+            </select>
+        </div>
 
-        <tr>
-            <td class="tlabel">Date Hired</td>
-            <td><input class="expand" type="date" name="date_hired"></td>
-        </tr>
-
-        <tr>
-            <td class="tlabel">Department</td>
-            <td>
-                <select class="expand" name="department">
-                    <option value="" disabled selected>-- Select Department --</option>
-                    <?php
-                        include 'allDepartment.php';
-                    ?>
-                </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td class="tlabel">Designation</td>
-            <td>
+        <div class="form-row">
+            <label class="tlabel">Designation</label>
+            <div>
                 <input type="radio" name="designation" value="1"> Manager<br>
                 <input type="radio" name="designation" value="2"> Employee<br>
-            </td>
-        </tr>
+            </div>
+        </div>
 
-        <tr>
-            <td class="tlabel"></td>
-            <td><input type="submit"></td>
-        </tr>
+        <div class="form-row">
+            <label></label>
+            <button type="submit">Submit</button>
+        </div>
 
-        </table>
-    </form>
+    </div>
+</form>
 
-    <?php
-        include 'employees_per_dept.php';
-    ?>
+<br />
 
-</body>
-</html>
+<?php
+    include 'employees_per_dept.php';
+?>
+
+<?php include 'footer.php'; ?>

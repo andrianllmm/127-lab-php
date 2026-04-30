@@ -21,6 +21,7 @@ if ($result->num_rows > 0) {
         if ($currentDept !== $row["DeptID"]) {
             if ($currentDept !== null) {
                 echo "</table>";
+                echo "<br />";
             }
 
             $currentDept = $row["DeptID"];
@@ -34,6 +35,7 @@ if ($result->num_rows > 0) {
                     <th>Salary</th>
                     <th>HireDate</th>
                     <th>Designation</th>
+                    <th></th>
                 </tr>";
         }
 
@@ -50,13 +52,13 @@ if ($result->num_rows > 0) {
             echo "<td align='center'>Employee</td>";
         }
 
-        echo "<td align='center'>
-            <form action='deleteEmployee.php' method='post'>
+        echo "<td style='display: flex; gap: 0.5rem; justify-content: center; align-items: center;'>
+            <form action='deleteEmployee.php' method='post' style='margin:0;'>
                 <input type='hidden' name='EmpID' value='" . $row["EmpID"] . "'>
                 <button type='submit'>Delete</button>
             </form>
 
-            <form action='editEmployee.php' method='post'>
+            <form action='editEmployee.php' method='post' style='margin:0;'>
                 <input type='hidden' name='EmpID' value='" . $row["EmpID"] . "'>
                 <button type='submit'>Edit</button>
             </form>

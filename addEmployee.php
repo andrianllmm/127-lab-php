@@ -2,34 +2,53 @@
 
 include 'DBConnector.php';
 
-$name = $_GET["name"];
-$age = $_GET["age"];
-$salary = $_GET["salary"];
+$name = $conn->real_escape_string($_GET["name"]);
+$age = intval($_GET["age"]);
+$salary = floatval($_GET["salary"]);
 $HireDate = $_GET["date_hired"];
-$DeptID = $_GET["department"];
-$Percent_Time = $_GET["percent_time"];
+$DeptID = intval($_GET["department"]);
+$Percent_Time = floatval($_GET["percent_time"]);
+$designation = intval($_GET["designation"]); // 1 = Manager, 2 = Employee
 
-$sql = "INSERT INTO `employee` (`EmpID`, `EmpName`, `Age`, `Salary`, `HireDate`)
-    VALUES (NULL, '$name', '$age', '$salary', '$HireDate');";
+$conn->begin_transaction();
 
-if ($conn->query($sql) === TRUE) {
+try {
 
-    // retrieving the ID of the newly inserted row
-    $last_id = $conn->insert_id;
+    // insert employee
+    $sql = "
+        INSERT INTO employee (EmpName, Age, Salary, HireDate)
+        VALUES ('$name', $age, $salary, '$HireDate')
+    ";
+    $conn->query($sql);
 
-    // add a row in the work table to register the new employee into a department
-    $query = "INSERT INTO `work` (`EmpID`, `DeptID`, `Percent_Time`)
-    VALUES ('$last_id', '$DeptID', '$Percent_Time');";
+    $empID = $conn->insert_id;
 
-    $result = $conn->query($query);
+    // insert work relation
+    $conn->query("
+        INSERT INTO work (EmpID, DeptID, Percent_Time)
+        VALUES ($empID, $DeptID, $Percent_Time)
+    ");
 
-    // this will reload the employees.php file
+    // ensure employee is not set as manager anywhere else
+    $conn->query("UPDATE department SET MgrEmpID = 0 WHERE MgrEmpID = $empID");
+
+    // if manager, assign to department
+    if ($designation == 1) {
+        $conn->query("
+            UPDATE department
+            SET MgrEmpID = $empID
+            WHERE DeptID = $DeptID
+        ");
+    }
+
+    $conn->commit();
+
     header("Location: employees.php");
-
     exit();
 
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+} catch (Exception $e) {
+    $conn->rollback();
+    echo "Error: " . $e->getMessage();
 }
 
 $conn->close();
