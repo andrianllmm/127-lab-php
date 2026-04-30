@@ -45,7 +45,7 @@ try {
     // handle manager logic
 
     // remove this employee as manager from ANY department first
-    $conn->query("UPDATE department SET MgrEmpID = 0 WHERE MgrEmpID = $empID");
+    $conn->query("UPDATE department SET MgrEmpID = NULL WHERE MgrEmpID = $empID");
 
     if ($designation == 1) {
         // set as manager of selected department

@@ -30,7 +30,7 @@ try {
     ");
 
     // ensure employee is not set as manager anywhere else
-    $conn->query("UPDATE department SET MgrEmpID = 0 WHERE MgrEmpID = $empID");
+    $conn->query("UPDATE department SET MgrEmpID = NULL WHERE MgrEmpID = $empID");
 
     // if manager, assign to department
     if ($designation == 1) {

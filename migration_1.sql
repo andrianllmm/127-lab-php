@@ -1,0 +1,2 @@
+ALTER TABLE department
+MODIFY MgrEmpID INT NULL;

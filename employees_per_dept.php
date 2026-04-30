@@ -34,6 +34,7 @@ if ($result->num_rows > 0) {
                     <th>Age</th>
                     <th>Salary</th>
                     <th>HireDate</th>
+                    <th>Percent Time</th>
                     <th>Designation</th>
                     <th></th>
                 </tr>";
@@ -44,7 +45,8 @@ if ($result->num_rows > 0) {
             <td align='center'>" . $row["EmpName"] . "</td>
             <td align='center'>" . $row["Age"] . "</td>
             <td align='center'>" . $row["Salary"] . "</td>
-            <td align='center'>" . $row["HireDate"] . "</td>";
+            <td align='center'>" . $row["HireDate"] . "</td>
+            <td align='center'>" . $row["Percent_Time"] . "</td>";
 
         if ($row["MgrEmpID"] == $row["EmpID"]) {
             echo "<td align='center'>Manager</td>";
@@ -52,17 +54,20 @@ if ($result->num_rows > 0) {
             echo "<td align='center'>Employee</td>";
         }
 
-        echo "<td style='display: flex; gap: 0.5rem; justify-content: center; align-items: center;'>
-            <form action='deleteEmployee.php' method='post' style='margin:0;'>
-                <input type='hidden' name='EmpID' value='" . $row["EmpID"] . "'>
-                <button type='submit'>Delete</button>
-            </form>
+        echo "<td style='display: flex; gap: 0.5rem; justify-content: center; align-items: center;'>";
 
-            <form action='editEmployee.php' method='post' style='margin:0;'>
+        echo "<form action='deleteEmployee.php' method='post'
+                onsubmit=\"return confirm('Are you sure you want to delete this employee?')\">
+            <input type='hidden' name='EmpID' value='" . $row["EmpID"] . "'>
+            <button type='submit'>Delete</button>
+        </form>";
+
+        echo "<form action='editEmployee.php' method='post'>
                 <input type='hidden' name='EmpID' value='" . $row["EmpID"] . "'>
                 <button type='submit'>Edit</button>
-            </form>
-        </td>";
+            </form>";
+
+        echo "</td>";
 
         echo "</tr>";
     }
